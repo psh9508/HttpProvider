@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HttpProvider.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
@@ -120,16 +121,15 @@ namespace HttpProvider
         {
             return await DoPostBodyAsync<TResult>(async () =>
             {
-                //var values = body.ToDictionary();
+                var values = body.ToDictionary();
 
-                //using (var content = new FormUrlEncodedContent(values))
-                //{
-                //    content.Headers.Clear();
-                //    content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                using (var content = new FormUrlEncodedContent(values))
+                {
+                    content.Headers.Clear();
+                    content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
 
-                //    return await _httpClient.PostAsync(uri, content);
-                //}
-                return null;
+                    return await _httpClient.PostAsync(uri, content);
+                }
             });
         }
 
