@@ -146,11 +146,9 @@ namespace HttpProvider
 
                 return (true, await response.Content.ReadFromJsonAsync<TResult>());
             }
-            catch (NotSupportedException) // When content type is not valid
-            {
-                return (false, default(TResult));
-            }
-            catch (JsonException ex) // Invalid JSON
+            catch (Exception ex) when (ex is NotSupportedException || // When content type is not valid
+                                       ex is JsonException            // Invalid JSON
+                                       )
             {
                 return (false, default(TResult));
             }
