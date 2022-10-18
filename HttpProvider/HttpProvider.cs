@@ -9,7 +9,15 @@ using System.Threading.Tasks;
 
 namespace HttpProvider
 {
-    public class HttpProvider
+    public interface IHttpHeader
+    {
+        bool HasHeader(string name);
+        bool RemoveHeader(string name);
+        bool TryGetHeaderValue(string name, out string value);
+        void AddHeader(string name, string value, bool isOverried = false);
+    }
+
+    public class HttpProvider : IHttpHeader
     {
         protected static readonly HttpClient _httpClient = new HttpClient();
 
