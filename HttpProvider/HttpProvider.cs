@@ -1,4 +1,5 @@
 ﻿using HttpProvider.Extensions;
+using HttpProvider.Verbs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +22,19 @@ namespace HttpProvider
     {
         protected static readonly HttpClient _httpClient = new HttpClient();
 
-        public HttpProvider()
+        private readonly IHttpPostMethod _post;
+        private readonly IHttpGetMethod _get;
+
+        public HttpProvider(IHttpPostMethod postMethod, IHttpGetMethod getMethod)
         {
             if (_httpClient.BaseAddress == null)
             {
                 _httpClient.BaseAddress = new Uri("https://localhost:5001/");
                 _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             }
+            
+            _post = postMethod;
+            _get = getMethod;
         }
 
         public bool HasHeader(string name)
@@ -74,22 +81,6 @@ namespace HttpProvider
                     return;
 
                 _httpClient.DefaultRequestHeaders.Add(name, value);
-            }
-        }
-
-        public async Task<(bool IsSuccess, TResult Body)> GetAsync<TResult>(string uri)
-        {
-            try
-            {
-                var result = await _httpClient.GetAsync(uri);
-
-                var debug = await result.Content.ReadAsStringAsync();
-
-                return (true, await result.Content.ReadFromJsonAsync<TResult>());
-            }
-            catch (Exception ex)
-            {
-                throw;
             }
         }
     }
