@@ -1,4 +1,5 @@
 ﻿using HttpProvider;
+using HttpProvider.Verbs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace TestProject1
         public TestProvider()
         {
             // Injection 객체 넣어줘야 함. 좋은 설계가 맞는 것인가?
-            //_httpProvider = new HttpProvider.HttpProvider();
+            _httpProvider = new HttpProvider.HttpProvider(new HttpPostMethod(new HttpClient()), new HttpGetMethod());
         }
     }
 }
