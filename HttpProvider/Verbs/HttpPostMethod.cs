@@ -1,6 +1,7 @@
 ﻿using HttpProvider.Extensions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -12,7 +13,8 @@ namespace HttpProvider.Verbs
 {
     public interface IHttpPostMethod
     {
-
+        Task<(bool IsSuccess, TResult Body)> PostAsync<TResult, TRequest>(string uri, TRequest body, string contentType = "application/json");
+        Task<(bool IsSuccess, TResult Body)> PostAsync<TResult, TRequest>(string uri, TRequest body);
     }
 
     public class HttpPostMethod : IHttpPostMethod
