@@ -10,12 +10,19 @@ namespace TestProject1
 {
     internal class TestProvider
     {
+        private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36";
+        private const string ACCEPT_LANGUAGE = "ko,en-US;q=0.9,en;q=0.8";
+        private const string ACCEPT_CHARSET = "application/x-www-form-urlencoded; charset=UTF-8";
+        private const string ORIGIN = "https://developer.riotgames.com";
+        private readonly string X_RIOT_TOKEN;
+
         private readonly IHttpHeader _httpProvider;
 
         public TestProvider()
         {
             // Injection 객체 넣어줘야 함. 좋은 설계가 맞는 것인가?
             _httpProvider = new HttpProvider.HttpProvider(new HttpPostMethod(new HttpClient()), new HttpGetMethod());
+            X_RIOT_TOKEN = ApiSecret.API_KEY;
         }
     }
 }
