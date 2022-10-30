@@ -3,6 +3,7 @@ using HttpProvider.Verbs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,12 +18,27 @@ namespace TestProject1
         private readonly string X_RIOT_TOKEN;
 
         private readonly IHttpHeader _httpProvider;
+        private static HttpClient _httpClient;
 
         public TestProvider()
         {
-            // Injection 객체 넣어줘야 함. 좋은 설계가 맞는 것인가?
-            _httpProvider = new HttpProvider.HttpProvider(new HttpPostMethod(new HttpClient()), new HttpGetMethod());
+            _httpClient = new HttpClient();
+
             X_RIOT_TOKEN = ApiSecret.API_KEY;
+            _httpClient.DefaultRequestHeaders.Add("X-Riot-Token", X_RIOT_TOKEN);
+
+            // Injection 객체 넣어줘야 함. 좋은 설계가 맞는 것인가?
+            _httpProvider = new HttpProvider.HttpProvider(new HttpPostMethod(_httpClient), new HttpGetMethod());
+        }
+
+        public async Task Test()
+        {
+            await Task.Run(async () =>
+            {
+                var result = await _httpClient.GetAsync(@"https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/hideonbush");
+
+                var debug = await result.Content.ReadAsStringAsync();
+            });
         }
     }
 }

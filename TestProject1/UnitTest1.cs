@@ -8,8 +8,12 @@ namespace TestProject1
         }
 
         [Test]
-        public void Test1()
+        public async Task Test1()
         {
+            var test = new TestProvider();
+
+            await test.Test();
+
             Assert.Pass();
         }
     }
