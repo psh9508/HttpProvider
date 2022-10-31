@@ -12,9 +12,12 @@ namespace TestProject1
         {
             var test = new TestProvider();
 
-            await test.Test();
+            var result = await test.GetSummonerInfo("hideonbush");
 
-            Assert.Pass();
+            if (result != String.Empty)
+                Assert.Pass();
+            else
+                Assert.Fail();
         }
     }
 }

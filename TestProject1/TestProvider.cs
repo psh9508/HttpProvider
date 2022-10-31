@@ -31,14 +31,14 @@ namespace TestProject1
             _httpProvider = new HttpProvider.HttpProvider(new HttpPostMethod(_httpClient), new HttpGetMethod());
         }
 
-        public async Task Test()
+        public async Task<string> GetSummonerInfo(string summonerName)
         {
-            await Task.Run(async () =>
-            {
-                var result = await _httpClient.GetAsync(@"https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/hideonbush");
+            var result = await _httpClient.GetAsync(@$"https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}");
 
-                var debug = await result.Content.ReadAsStringAsync();
-            });
+            if (result.IsSuccessStatusCode == false)
+                return String.Empty;
+            
+            return await result.Content.ReadAsStringAsync();
         }
     }
 }
