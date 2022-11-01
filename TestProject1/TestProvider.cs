@@ -17,7 +17,7 @@ namespace TestProject1
         private const string ORIGIN = "https://developer.riotgames.com";
         private readonly string X_RIOT_TOKEN;
 
-        private readonly IHttpHeader _httpProvider;
+        private readonly HttpProvider.HttpProvider _httpProvider;
         private static HttpClient _httpClient;
 
         public TestProvider()
@@ -33,12 +33,10 @@ namespace TestProject1
 
         public async Task<string> GetSummonerInfo(string summonerName)
         {
-            var result = await _httpClient.GetAsync(@$"https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}");
+            //var result = await _httpClient.GetAsync(@$"https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}");
+            var result = await _httpProvider.GetAsync<string>(@$"https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}");
 
-            if (result.IsSuccessStatusCode == false)
-                return String.Empty;
-            
-            return await result.Content.ReadAsStringAsync();
+            return result;
         }
     }
 }
