@@ -83,5 +83,12 @@ namespace HttpProvider
                 _httpClient.DefaultRequestHeaders.Add(name, value);
             }
         }
+
+        public async Task<T?> GetAsync<T>(string url)
+        {
+            var result = await _get.GetAsync<T>(url);
+
+            return result.IsSuccess ? result.Body : default(T);
+        }
     }
 }
