@@ -28,7 +28,7 @@ namespace TestProject1
             _httpClient.DefaultRequestHeaders.Add("X-Riot-Token", X_RIOT_TOKEN);
 
             // Injection 객체 넣어줘야 함. 좋은 설계가 맞는 것인가?
-            _httpProvider = new HttpProvider.HttpProvider(new HttpPostMethod(_httpClient), new HttpGetMethod());
+            _httpProvider = new HttpProvider.HttpProvider(new HttpPostMethod(_httpClient), new HttpGetMethod(_httpClient));
         }
 
         public async Task<string> GetSummonerInfo(string summonerName)
