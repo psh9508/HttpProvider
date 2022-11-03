@@ -9,6 +9,17 @@ using System.Threading.Tasks;
 
 namespace TestProject1
 {
+    public class SummonerInfo
+    {
+        public string Id { get; set; } = string.Empty;
+        public string AccountId { get; set; } = string.Empty;
+        public string Puuid { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public int ProfileIconId { get; set; }
+        public long RevisionDate { get; set; }
+        public int SummonerLevel { get; set; }
+    }
+
     internal class TestProvider
     {
         private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36";
