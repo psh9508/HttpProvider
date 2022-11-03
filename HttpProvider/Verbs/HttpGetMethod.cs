@@ -24,6 +24,8 @@ namespace HttpProvider.Verbs
         {
             var response = await _httpClient.GetAsync(uri);
 
+            var debug = await response.Content.ReadAsStringAsync();
+
             return response.IsSuccessStatusCode ? (true, await response.Content.ReadFromJsonAsync<TResult>())
                                                 : (false, default(TResult));
         }
