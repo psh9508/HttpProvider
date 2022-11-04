@@ -42,10 +42,9 @@ namespace TestProject1
             _httpProvider = new HttpProvider.HttpProvider(new HttpPostMethod(_httpClient), new HttpGetMethod(_httpClient));
         }
 
-        public async Task<T?> GetSummonerInfo<T>(string summonerName)
+        public async Task<SummonerInfo?> GetSummonerInfo(string summonerName)
         {
-            //var result = await _httpClient.GetAsync(@$"https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}");
-            var result = await _httpProvider.GetAsync<T>(@$"https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}");
+            var result = await _httpProvider.GetAsync<SummonerInfo>(@$"https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}");
 
             return result;
         }
