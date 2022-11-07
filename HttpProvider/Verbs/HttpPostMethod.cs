@@ -14,7 +14,7 @@ namespace HttpProvider.Verbs
     public interface IHttpPostMethod
     {
         Task<(bool IsSuccess, TResult Body)> PostAsync<TResult, TRequest>(string uri, TRequest body, string contentType = "application/json");
-        Task<(bool IsSuccess, TResult Body)> PostAsync<TResult, TRequest>(string uri, TRequest body);
+        Task<(bool IsSuccess, TResult? Body)> PostAsync<TResult, TRequest>(string uri, TRequest body);
     }
 
     public class HttpPostMethod : IHttpPostMethod
@@ -26,7 +26,7 @@ namespace HttpProvider.Verbs
             _httpClient = httpClient;
         }
 
-        public async Task<(bool IsSuccess, TResult Body)> PostAsync<TResult, TRequest>(string uri, TRequest body, string contentType = "application/json")
+        public async Task<(bool IsSuccess, TResult? Body)> PostAsync<TResult, TRequest>(string uri, TRequest body, string contentType = "application/json")
         {
             if (contentType == "application/x-www-form-urlencoded")
             {
@@ -34,13 +34,13 @@ namespace HttpProvider.Verbs
             }
             else
             {
-                return await PostWithJsonEncoding<TResult, TRequest>(uri, body);
+                return await PostWithJsonEncoding<TResult?, TRequest>(uri, body);
             }
         }
 
-        public async Task<(bool IsSuccess, TResult Body)> PostAsync<TResult, TRequest>(string uri, TRequest body)
+        public async Task<(bool IsSuccess, TResult? Body)> PostAsync<TResult, TRequest>(string uri, TRequest body)
         {
-            return await DoPostBodyAsync<TResult>(async () =>
+            return await DoPostBodyAsync<TResult?>(async () =>
             {
                 var debugBody = JsonSerializer.Serialize(body);
 
@@ -48,9 +48,9 @@ namespace HttpProvider.Verbs
             });
         }
 
-        private async Task<(bool IsSuccess, TResult Body)> PostWithJsonEncoding<TResult, TRequest>(string uri, TRequest body)
+        private async Task<(bool IsSuccess, TResult? Body)> PostWithJsonEncoding<TResult, TRequest>(string uri, TRequest body)
         {
-            return await DoPostBodyAsync<TResult>(async () =>
+            return await DoPostBodyAsync<TResult?>(async () =>
             {
                 var debug = JsonSerializer.Serialize(body);
 
@@ -58,9 +58,9 @@ namespace HttpProvider.Verbs
             });
         }
 
-        private async Task<(bool IsSuccess, TResult Body)> PostWithURLEncoding<TResult, TRequest>(string uri, TRequest body)
+        private async Task<(bool IsSuccess, TResult? Body)> PostWithURLEncoding<TResult, TRequest>(string uri, TRequest body)
         {
-            return await DoPostBodyAsync<TResult>(async () =>
+            return await DoPostBodyAsync<TResult?>(async () =>
             {
                 var values = body.ToDictionary();
 
@@ -74,7 +74,7 @@ namespace HttpProvider.Verbs
             });
         }
 
-        private async Task<(bool IsSuccess, TResult Body)> DoPostBodyAsync<TResult>(Func<Task<HttpResponseMessage>> postAsync)
+        private async Task<(bool IsSuccess, TResult? Body)> DoPostBodyAsync<TResult>(Func<Task<HttpResponseMessage>> postAsync)
         {
             try
             {
