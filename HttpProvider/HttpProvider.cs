@@ -93,26 +93,10 @@ namespace HttpProvider
 
         public async Task<(bool, TResult?)> PostAsync<TResult, TBody>(string url, TBody body)
         {
-            try
-            {
-                //var response = await postAsync();
-                var response = await _httpClient.PostAsJsonAsync(url, body);
+            var response = await _post.PostAsync<TResult, TBody>(url, body);
 
-                var debug = await response.Content.ReadAsStringAsync();
-
-                if (response.IsSuccessStatusCode == false)
-                    return (false, default(TResult));
-
-                return (true, await response.Content.ReadFromJsonAsync<TResult>());
-            }
-            catch (NotSupportedException) // When content type is not valid
-            {
-                return (false, default(TResult));
-            }
-            catch (JsonException ex) // Invalid JSON
-            {
-                return (false, default(TResult));
-            }
+            return response.IsSuccess ? (true, response.Body)
+                                      : (false, default(TResult));
         }
     }
 }
