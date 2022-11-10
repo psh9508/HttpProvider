@@ -13,7 +13,7 @@ namespace HttpProvider.Verbs
 {
     public interface IHttpPostMethod
     {
-        Task<(bool IsSuccess, TResult Body)> PostAsync<TResult, TRequest>(string uri, TRequest body, string contentType = "application/json");
+        Task<(bool IsSuccess, TResult? Body)> PostAsync<TResult, TRequest>(string uri, TRequest body, string contentType = "application/json");
         Task<(bool IsSuccess, TResult? Body)> PostAsync<TResult, TRequest>(string uri, TRequest body);
     }
 
