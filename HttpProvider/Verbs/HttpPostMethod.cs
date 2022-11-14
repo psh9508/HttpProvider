@@ -1,4 +1,5 @@
-﻿using HttpProvider.Extensions;
+﻿using HttpProvider.Bases;
+using HttpProvider.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,15 +18,8 @@ namespace HttpProvider.Verbs
         Task<(bool IsSuccess, TResult? Body)> PostAsync<TResult, TRequest>(string uri, TRequest body);
     }
 
-    public class HttpPostMethod : IHttpPostMethod
+    public class HttpPostMethod : HttpProviderBase, IHttpPostMethod
     {
-        private readonly HttpClient _httpClient;
-
-        public HttpPostMethod(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-        }
-
         public async Task<(bool IsSuccess, TResult? Body)> PostAsync<TResult, TRequest>(string uri, TRequest body, string contentType = "application/json")
         {
             if (contentType == "application/x-www-form-urlencoded")

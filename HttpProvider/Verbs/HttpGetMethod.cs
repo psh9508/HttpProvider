@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HttpProvider.Bases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
@@ -11,15 +12,8 @@ namespace HttpProvider.Verbs
     {
         Task<(bool IsSuccess, TResult? Body)> GetAsync<TResult>(string uri);
     }
-    public class HttpGetMethod : IHttpGetMethod
+    public class HttpGetMethod : HttpProviderBase, IHttpGetMethod
     {
-        private readonly HttpClient _httpClient;
-
-        public HttpGetMethod(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-        }
-
         public async Task<(bool IsSuccess, TResult? Body)> GetAsync<TResult>(string uri)
         {
             var response = await _httpClient.GetAsync(uri);
