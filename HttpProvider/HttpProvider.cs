@@ -25,6 +25,14 @@ namespace HttpProvider
         private readonly IHttpPostMethod _post;
         private readonly IHttpGetMethod _get;
 
+        public HttpProvider(Action<HttpClient> setup)
+        {
+            setup.Invoke(_httpClient);
+
+            _post = new HttpPostMethod();
+            _get = new HttpGetMethod();
+        }
+
         public HttpProvider(IHttpPostMethod postMethod, IHttpGetMethod getMethod)
         {
             if (_httpClient.BaseAddress == null)
