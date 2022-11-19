@@ -29,19 +29,16 @@ namespace TestProject1
         private readonly string X_RIOT_TOKEN;
 
         private readonly HttpProvider.HttpProvider _httpProvider;
-        private static HttpClient _httpClient;
 
         public TestProvider()
         {
-            _httpClient = new HttpClient();
-
             X_RIOT_TOKEN = ApiSecret.API_KEY;
-            _httpClient.DefaultRequestHeaders.Add("X-Riot-Token", X_RIOT_TOKEN);
 
             _httpProvider = new HttpProvider.HttpProvider(httpClient =>
             {
                 httpClient.BaseAddress = new Uri("https://localhost:5001/");
                 httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                httpClient.DefaultRequestHeaders.Add("X-Riot-Token", X_RIOT_TOKEN);
             });
         }
 
