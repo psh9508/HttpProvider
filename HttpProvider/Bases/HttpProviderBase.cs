@@ -8,7 +8,7 @@ namespace HttpProvider.Bases
 {
     public abstract class HttpProviderBase
     {
-        protected static HttpClient _httpClient;
+        protected static HttpClient _httpClient { get; private set; }
 
         static HttpProviderBase()
         {
