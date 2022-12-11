@@ -22,10 +22,10 @@ namespace TestProject1
 
     internal class TestProvider
     {
-        private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36";
-        private const string ACCEPT_LANGUAGE = "ko,en-US;q=0.9,en;q=0.8";
-        private const string ACCEPT_CHARSET = "application/x-www-form-urlencoded; charset=UTF-8";
-        private const string ORIGIN = "https://developer.riotgames.com";
+        //private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36";
+        //private const string ACCEPT_LANGUAGE = "ko,en-US;q=0.9,en;q=0.8";
+        //private const string ACCEPT_CHARSET = "application/x-www-form-urlencoded; charset=UTF-8";
+        //private const string ORIGIN = "https://developer.riotgames.com";
         private readonly string X_RIOT_TOKEN;
 
         private readonly HttpProvider.HttpProvider _httpProvider;
